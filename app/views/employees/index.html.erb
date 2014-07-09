@@ -1,0 +1,34 @@
+<%= flash[:notice] if flash[:notice] %>
+<h1>Listing employees</h1>
+
+<table id="employees_list">
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Email</th>
+    <th>Location</th>
+    <th>Department</th>
+    <th>Designation</th>
+    <th></th>
+  </tr>
+
+<% unless @employees.size == 0  %>
+  <% @employees.each do |employee| %>
+    <tr>
+      <td><%= employee.name %></td>
+      <td><%= employee.age %></td>
+      <td><%= employee.email_id %></td>
+      <td><%= employee.location %></td>
+      <td><%= employee.department %></td>
+      <td><%= employee.designation %></td>
+      <td><%= link_to 'Delete', delete_employee_path(employee), data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+<% else %>
+  <tr><td>No Data Found.</td></tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Employee', new_employee_path %>

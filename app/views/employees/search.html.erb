@@ -1,0 +1,6 @@
+<%= form_tag(search_employees_path, remote:true) do %>
+  Enter keyword to search: <%= text_field_tag "keyword" %>
+  <%= submit_tag "Search"  %>
+<% end %>
+  
+<div id="search_result"></div>

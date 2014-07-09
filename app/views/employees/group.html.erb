@@ -1,0 +1,6 @@
+<%= form_tag(group_employees_path, remote:true) do %>
+  Select Attribute for Grouping Employees : <%= select_tag "attribute", options_for_select(select_attributes) %>
+  <%= submit_tag "Submit"  %>
+<% end %>
+  
+<div id="group_result"></div>

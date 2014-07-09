@@ -1,0 +1,7 @@
+<%= form_tag(sort_employees_path, remote:true) do %>
+  Select Attribute for Sort : <%= select_tag "attribute", options_for_select(select_attributes) %></br>
+  Select Order: <%= select_tag "order", options_for_select([["Ascending", "asc"], ["Descending", "desc"]]) %></br>
+  <%= submit_tag "Submit"  %>
+<% end %>
+  
+<div id="sort_result"></div>

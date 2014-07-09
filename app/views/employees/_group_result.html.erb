@@ -1,0 +1,19 @@
+<h2>Result</h2></br>
+
+<table>
+  <tr>
+    <th><%= "Group by Attribute: " + params[:attribute] %></th>
+    <th>Name( Just for example name else we can have other attributes also)</th>
+  </tr>
+  
+  <% @group_employees.each_pair do |key, value| %>
+    <tr>
+      <td><%= key %></td>
+      <td>
+      <% value.each do |emp| %>
+        <%= emp.name %>
+      <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
