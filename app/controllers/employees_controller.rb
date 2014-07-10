@@ -29,7 +29,7 @@ class EmployeesController < ApplicationController
   # return Hash with key as grouped attribute & Value as Arrays of grouping result
   def group
     if request.xhr?
-      @group_employees = Employee.where(soft_deleted: false).to_set.classify { |emp| emp.send(params[:attribute]) }
+      @group_employees = Employee.where(soft_deleted: false).to_set.classify { |emp| emp.send(params[:attribute]) }#Employee.where(soft_deleted: false).group_by {|x| x.send(params[:attribute])}(Another Way)
     end
   end
   
