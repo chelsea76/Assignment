@@ -2,7 +2,7 @@ class EmployeesController < ApplicationController
   
   # List of all Employees
   def index
-    @employees = Employee.where(soft_deleted: false)
+    @employees = Employee.all#where(soft_deleted: false)
   end
 
   def new
@@ -21,7 +21,11 @@ class EmployeesController < ApplicationController
 
   # Soft Delete, will update soft_deleted attribute to TRUE
   def delete
-    employee = Employee.find(params[:id])
+    begin
+      employee = Employee.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to employees_path, notice: "Employee with ID #{params[:id]} is not found." and return
+    end
     employee.update_attributes(soft_deleted: true)
     redirect_to employees_path, notice: 'Employee was successfully deleted.'
   end
@@ -29,20 +33,20 @@ class EmployeesController < ApplicationController
   # return Hash with key as grouped attribute & Value as Arrays of grouping result
   def group
     if request.xhr?
-      @group_employees = Employee.where(soft_deleted: false).to_set.classify { |emp| emp.send(params[:attribute]) }#Employee.where(soft_deleted: false).group_by {|x| x.send(params[:attribute])}(Another Way)
+      @group_employees = Employee.all.to_set.classify { |emp| emp.send(params[:attribute]) }#Employee.where(soft_deleted: false).group_by {|x| x.send(params[:attribute])}(Another Way)
     end
   end
   
   # search defined as scope in Employee class
   def search
     if request.xhr?
-      @employees = Employee.search(params[:keyword]).where(soft_deleted: false)
+      @employees = Employee.search(params[:keyword])#.where(soft_deleted: false)(Default Scope is used now)
     end
   end
   
   def sort
     if request.xhr?
-      @employees = Employee.where(soft_deleted: false).order(params[:attribute] + " " + params[:order])
+      @employees = Employee.order(params[:attribute] + " " + params[:order])
     end
   end
 end
